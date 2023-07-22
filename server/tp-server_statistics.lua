@@ -20,7 +20,7 @@ AddEventHandler('onResourceStop', function(resourceName)
       return
     end
 
-    for k,v in pairs(getOnlinePlayers()) do
+    for k,v in pairs(GetPlayers()) do
         saveUserStatistics(v)
     end
 
@@ -104,7 +104,6 @@ AddEventHandler('tp-advancedzombies:updatePlayerStatistics', function(type, coun
     if Config.UserStatisticsRanking then
 
         local _source = source
-
         local identifier = getIdentifier(_source)
     
         for k, v in pairs(userStatistics) do
@@ -126,13 +125,27 @@ AddEventHandler('tp-advancedzombies:updatePlayerStatistics', function(type, coun
 end)
 
 function saveUserStatistics(_source)
+    print("saveUserStatistics")
+
     local _identifier = getIdentifier(_source)
+
+    if not _identifier then
+        print("Cannot save stats, no framework")
+
+        return
+    end
+
+    print("_identifier" .. _identifier)
 
     for k, v in pairs(userStatistics) do
 
         if v.id == _identifier then
+            
             local zombieKills = v.zombie_kills
             local playerDeaths = v.deaths
+
+            print("zombieKills" .. zombieKills)
+            print("playerDeaths" .. playerDeaths)
 
             MySQL.Sync.execute('UPDATE tp_user_statistics SET deaths = @deaths, zombie_kills = @zombie_kills WHERE identifier = @identifier', {
                 ["identifier"] = _identifier,

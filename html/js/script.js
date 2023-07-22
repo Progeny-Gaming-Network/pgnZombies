@@ -8,7 +8,7 @@ function closeAdvancedZombiesUI() {
 
   $('#userslist').html('');
 
-	$.post('http://tp-advancedzombies/closeUI', JSON.stringify({}));
+	$.post('http://pgnZombies/closeUI', JSON.stringify({}));
 }
 
 function toggleAdvancedZombiesUI(bool) {
@@ -131,7 +131,7 @@ $(function() {
                 const audioPlayer = new Audio("./sounds/" + event.data.sound);
 
                 if (audioPlayer != null && audioPlayer !== undefined) {
-                  audioPlayer.volume = event.data.soundVolume;
+                  audioPlayer.volume = 0.05;
                   audioPlayer.play();
                 }
 
